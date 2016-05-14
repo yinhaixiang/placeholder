@@ -18,7 +18,7 @@ http.createServer(function (req, res) {
     var sizeArr = size.split('x');
     width = +sizeArr[0];
     height = +sizeArr[1];
-  } else if(size) {
+  } else if (size) {
     width = +size;
     height = +size;
   } else {
@@ -39,7 +39,7 @@ http.createServer(function (req, res) {
   ctx.font = '30px Arial';
   ctx.fillStyle = color;
   var m = ctx.measureText(text);
-  ctx.fillText(text, width / 2 - m.width/2, height / 2 + 15);
+  ctx.fillText(text, width / 2 - m.width / 2, height / 2 + 15);
 
   //测试文字区块位置
   //ctx.strokeStyle = 'blue';
@@ -47,7 +47,6 @@ http.createServer(function (req, res) {
 
 
   var buf = canvas.toDataURL();
-  console.log(buf)
   var base64Data = buf.replace(/^data:image\/\w+;base64,/, '');
   var dataBuffer = new Buffer(base64Data, 'base64');
 
