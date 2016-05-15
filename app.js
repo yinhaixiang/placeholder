@@ -4,7 +4,7 @@ var port = 3007;
 
 http.createServer(function (req, res) {
   if (req.url === '/favicon.ico') {
-    return;
+    return res.end();
   }
   var pathArr = req.url.split('/').slice(1);
   var size = pathArr[0].replace('X', 'x');
