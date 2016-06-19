@@ -186,10 +186,11 @@ http.createServer(function (req, res) {
   ctx.fillRect(0, 0, width, height);
 
   //绘制文字
-  ctx.font = '30px Arial';
+  var fontSize = getFontSize(width, height);
+  ctx.font = fontSize + 'px Arial';
   ctx.fillStyle = color;
   var m = ctx.measureText(text);
-  ctx.fillText(text, width / 2 - m.width / 2, height / 2 + 15);
+  ctx.fillText(text, width / 2 - m.width / 2, height / 2 + fontSize / 2);
 
   //测试文字区块位置
   //ctx.strokeStyle = 'blue';
@@ -200,7 +201,18 @@ http.createServer(function (req, res) {
   var base64Data = buf.replace(/^data:image\/\w+;base64,/, '');
   var dataBuffer = new Buffer(base64Data, 'base64');
 
-  return res.end(dataBuffer, 'binary');
+  return res.end(dataBuffer);
 }).listen(port);
+
+function getFontSize(width, height) {
+  var tmpWidth = Math.round(width / 10);
+  var tmpHeight = Math.round(height / 10);
+  var fontSize = tmpHeight < tmpWidth ? tmpHeight : tmpWidth;
+  if (fontSize < 12) {
+    fontSize = 12;
+  }
+  return fontSize;
+}
+
 
 console.log('server is ok on', port);
