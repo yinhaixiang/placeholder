@@ -1,5 +1,6 @@
 var http = require('http');
 var Canvas = require('canvas');
+
 var port = 3007;
 
 var defaultColors = [
@@ -161,7 +162,7 @@ http.createServer(function (req, res) {
   var size = pathArr[0].replace('X', 'x');
   var bgcolor = (defaultColors.indexOf(pathArr[1]) > -1) ? pathArr[1] : ('#' + (pathArr[1] || 'A7E59B'));
   var color = (defaultColors.indexOf(pathArr[2]) > -1) ? pathArr[2] : ('#' + (pathArr[2] || '666666'));
-
+  
   var width;
   var height;
   if (size && size.includes('x')) {
@@ -175,32 +176,32 @@ http.createServer(function (req, res) {
     width = 300;
     height = 300;
   }
-
+  
   var text = decodeURIComponent(pathArr[3] || '') || (width + 'x' + height);
-
+  
   var canvas = new Canvas(width, height);
   var ctx = canvas.getContext('2d');
-
+  
   //绘制矩形
   ctx.fillStyle = bgcolor;
   ctx.fillRect(0, 0, width, height);
-
+  
   //绘制文字
   var fontSize = getFontSize(width, height);
-  ctx.font = fontSize + 'px Arial';
+  ctx.font = fontSize + 'px Microsoft YaHei';
   ctx.fillStyle = color;
   var m = ctx.measureText(text);
   ctx.fillText(text, width / 2 - m.width / 2, height / 2 + fontSize / 2);
-
+  
   //测试文字区块位置
   //ctx.strokeStyle = 'blue';
   //ctx.strokeRect(width / 2 - m.width/2, height / 2 - 15, m.width, 30);
-
-
+  
+  
   var buf = canvas.toDataURL();
   var base64Data = buf.replace(/^data:image\/\w+;base64,/, '');
   var dataBuffer = new Buffer(base64Data, 'base64');
-
+  
   return res.end(dataBuffer);
 }).listen(port);
 
