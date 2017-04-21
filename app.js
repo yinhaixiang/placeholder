@@ -159,14 +159,19 @@ http.createServer(function (req, res) {
     return res.end();
   }
   var pathArr = req.url.split('/').slice(1);
+  console.log(pathArr);
   var size = pathArr[0].replace('X', 'x');
-  var bgcolor = (defaultColors.indexOf(pathArr[1]) > -1) ? pathArr[1] : ('#' + (pathArr[1] || 'A7E59B'));
-  var color = (defaultColors.indexOf(pathArr[2]) > -1) ? pathArr[2] : ('#' + (pathArr[2] || '666666'));
+  var bgcolor = getColorByParam(pathArr[1], '#A7E59B');
+  var color = getColorByParam(pathArr[2], '#777777');
   
   var width;
   var height;
   if (size && size.includes('x')) {
     var sizeArr = size.split('x');
+    width = +sizeArr[0];
+    height = +sizeArr[1];
+  } else if (size && size.includes('*')) {
+    var sizeArr = size.split('*');
     width = +sizeArr[0];
     height = +sizeArr[1];
   } else if (size) {
@@ -215,5 +220,25 @@ function getFontSize(width, height) {
   return fontSize;
 }
 
+function getColorByParam(param, defaultColor) {
+  if (!param) {
+    return defaultColor;
+  } else if (param == 'rd') {
+    return getRandomColor();
+  } else if (defaultColors.indexOf(param) > -1) {
+    return param;
+  } else {
+    return '#' + param;
+  }
+}
+
+function getRandomColor() {
+  var color = '#';
+  for (var i = 0; i < 3; i++) {
+    var hex = Math.floor(Math.random() * (255 + 1)).toString(16);
+    color += (hex.length == 1 ? '0' + hex : hex);
+  }
+  return color;
+}
 
 console.log('server is ok on', port);
