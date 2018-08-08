@@ -1,4 +1,4 @@
-# placeholder
+# 简单易用的placeholder
 
 ### 简单使用说明: http://img.yinhaixiang.cn/图片尺寸/背景色/文字色/文字内容
 ### 实际案例: http://img.yinhaixiang.cn/500x200/yellow/aaaaaa/hello_world
